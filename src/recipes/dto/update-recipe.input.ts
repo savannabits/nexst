@@ -1,8 +1,9 @@
 import { CreateRecipeInput } from './create-recipe.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { ObjectId } from 'mongoose';
 
 @InputType()
 export class UpdateRecipeInput extends PartialType(CreateRecipeInput) {
-  @Field(() => Int)
-  id: number;
+  @Field(() => String)
+  _id: ObjectId;
 }

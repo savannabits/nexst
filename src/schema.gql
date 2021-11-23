@@ -2,30 +2,37 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateRecipeInput {
-  name: Int!
+type Recipe {
+  """Unique Mongo ID"""
+  _id: String!
+
+  """Name of the recipe"""
+  name: String!
+
+  """Recipe Description goes"""
+  description: String
+  createdAt: String
+  updatedAt: String
+}
+
+type Query {
+  recipes: [Recipe!]!
+  recipe(id: String!): Recipe!
 }
 
 type Mutation {
   createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
-  removeRecipe(id: Int!): Recipe!
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
+  removeRecipe(id: String!): Recipe!
 }
 
-type Query {
-  recipe(id: Int!): Recipe!
-  recipes: [Recipe!]!
-}
-
-type Recipe {
-  """Recipe Description goes here"""
-  description: String!
-
-  """Name of the recipe"""
+input CreateRecipeInput {
   name: String!
+  description: String
 }
 
 input UpdateRecipeInput {
-  id: Int!
-  name: Int
+  name: String
+  description: String
+  _id: String!
 }

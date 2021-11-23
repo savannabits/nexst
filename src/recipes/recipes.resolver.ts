@@ -3,6 +3,7 @@ import { RecipesService } from './recipes.service';
 import { Recipe } from './entities/recipe.entity';
 import { CreateRecipeInput } from './dto/create-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
+import { ObjectId } from 'mongoose';
 
 @Resolver(() => Recipe)
 export class RecipesResolver {
@@ -19,17 +20,17 @@ export class RecipesResolver {
   }
 
   @Query(() => Recipe, { name: 'recipe' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: ObjectId) {
     return this.recipesService.findOne(id);
   }
 
   @Mutation(() => Recipe)
   updateRecipe(@Args('updateRecipeInput') updateRecipeInput: UpdateRecipeInput) {
-    return this.recipesService.update(updateRecipeInput.id, updateRecipeInput);
+    return this.recipesService.update(updateRecipeInput._id, updateRecipeInput);
   }
 
   @Mutation(() => Recipe)
-  removeRecipe(@Args('id', { type: () => Int }) id: number) {
+  removeRecipe(@Args('id', { type: () => String }) id: ObjectId) {
     return this.recipesService.remove(id);
   }
 }

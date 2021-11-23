@@ -1,30 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { CreateRecipeInput } from './dto/create-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
+import { Recipe, RecipeDocument } from './entities/recipe.entity';
 
 @Injectable()
 export class RecipesService {
-  create(createRecipeInput: CreateRecipeInput) {
-    return 'This action adds a new recipe';
+  constructor(@InjectModel(Recipe.name) private model: Model<RecipeDocument>) {}
+  
+  async create(createRecipeInput: CreateRecipeInput) {
+    return  await this.model.create(createRecipeInput);
   }
 
-  findAll() {
-    return [
-      {id: 1,name: 'Matoke', description: 'Matoke', createdAt: 'now',updatedAt: 'now'},
-      {id: 2,name: 'Roast Chicken', description: 'Roast chicken recipe', createdAt: 'now',updatedAt: 'now'},
-      {id: 3,name: 'Rice', description: 'Rice Recipe', createdAt: 'now',updatedAt: 'now'},
-    ];
+  async findAll(): Promise<Array<RecipeDocument>> {
+    return await this.model.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} recipe`;
+  async findOne(id: ObjectId) {
+    return await this.model.findById(id);
   }
 
-  update(id: number, updateRecipeInput: UpdateRecipeInput) {
-    return `This action updates a #${id} recipe`;
+  async update(id: ObjectId, updateRecipeInput: UpdateRecipeInput) {
+    await this.model.updateOne({_id: id},updateRecipeInput);
+    return await this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} recipe`;
+  remove(id: ObjectId) {
+    return this.model.deleteOne({_id: id})
   }
 }
