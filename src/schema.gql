@@ -1,0 +1,31 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateRecipeInput {
+  name: Int!
+}
+
+type Mutation {
+  createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
+  removeRecipe(id: Int!): Recipe!
+  updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
+}
+
+type Query {
+  recipe(id: Int!): Recipe!
+  recipes: [Recipe!]!
+}
+
+type Recipe {
+  """Recipe Description goes here"""
+  description: String!
+
+  """Name of the recipe"""
+  name: String!
+}
+
+input UpdateRecipeInput {
+  id: Int!
+  name: Int
+}
